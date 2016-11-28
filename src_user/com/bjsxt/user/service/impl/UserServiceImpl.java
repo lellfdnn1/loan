@@ -39,7 +39,7 @@ public class UserServiceImpl implements IUserService
 			resultJson.put("code", "1");
 			resultJson.put("info", "管理员添加成功");
 			JSONObject data = new JSONObject();
-			data.put("id", insert);
+			data.put("id", admins.getId());
 			resultJson.put("data", data);
 		}else
 		{

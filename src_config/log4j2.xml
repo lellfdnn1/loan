@@ -23,7 +23,7 @@
 	</appenders>
 	<loggers>
 		<!-- Root Logger -->
-		<root level="info">
+		<root level="debug">
 			<appender-ref ref="Console" />
 			<appender-ref ref="System" />
 		</root>

@@ -20,7 +20,7 @@
  		</where>
  	</select>
  	<!-- 添加一条记录 -->
- 	<insert id="insert" parameterType="admins" useGeneratedKeys="true" keyColumn="id">
+ 	<insert id="insert" parameterType="admins" useGeneratedKeys="true" keyProperty="id">
  		INSERT INTO `a_admins` (`email`, `password`, `trueName`, `phone`, `qq`, `status`, `createTime`, `updateTime`, `lastLoginTime`) 
  		VALUES 
  		(#{email}, #{password},#{trueName},#{phone}, #{qq},#{status}, #{createTime},#{updateTime},#{lastLoginTime})
