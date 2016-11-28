@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.bjsxt.user.dao.IAAdminsDao">
+	 	
+	 <!-- 查询单个记录 -->
+ 	<select id="findOne" parameterType="map" resultType="admins">
+ 		select * from a_admins
+ 		<where>
+ 			<if test="id != null and id != ''">
+ 				id = #{id}
+ 			</if>
+ 			<if test="email != null and email !='' ">
+ 				email = #{email}
+ 			</if>
+ 			<if test="password != null and password !='' ">
+ 				password = #{password}
+ 			</if>
+ 		</where>
+ 	</select>
+ 	<!-- 添加一条记录 -->
+ 	<insert id="insert" parameterType="admins" useGeneratedKeys="true" keyColumn="id">
+ 		INSERT INTO `a_admins` (`email`, `password`, `trueName`, `phone`, `qq`, `status`, `createTime`, `updateTime`, `lastLoginTime`) 
+ 		VALUES 
+ 		(#{email}, #{password},#{trueName},#{phone}, #{qq},#{status}, #{createTime},#{updateTime},#{lastLoginTime})
+ 	</insert>
+ </mapper>
