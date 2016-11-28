@@ -1,6 +1,8 @@
 package com.bjsxt.common.dao;
 
+import java.util.List;
 import java.util.Map;
+
 
 public interface IBasicDao<T>
 {
@@ -22,4 +24,17 @@ public interface IBasicDao<T>
 	 * @return
 	 */
 	T findOne(Map<String,Object> condMap);
+	/**
+	 * 更新一条数据
+	 * @param condMap
+	 * @return
+	 */
+	int update(T t);
+	/**
+	 * 根据条件查询多条数据
+	 * @param pageInfoUtil
+	 * @param condMap
+	 * @return
+	 */
+	List<T> findList(Map<String,Object> condMap);
 }

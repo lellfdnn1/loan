@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @Component("mD5Util")
 public class MD5Util 
 {
-	private RegCheck regCheck = new RegCheck();
 	/**
 	 * md5加密
 	 * @param s
@@ -57,7 +56,7 @@ public class MD5Util
     public String encryString(String password)
     {
     	/* 获得32位随机数 */
-    	String randomStr = regCheck.getRandomStr(32);
+    	String randomStr = RegCheck.getRandomStr(32);
     	/* 拼装密文 */
     	String encryPwd = randomStr+"$md5$"+password ;
     	/* 加密 */
