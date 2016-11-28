@@ -12,5 +12,6 @@
 	<!-- 给类起别名 -->
 	<typeAliases>
 		<typeAlias type="com.bjsxt.user.pojo.AAdmins" alias="admins"/>
+		<typeAlias type="com.bjsxt.user.pojo.ARole" alias="role"/>
 	</typeAliases>
 </configuration>

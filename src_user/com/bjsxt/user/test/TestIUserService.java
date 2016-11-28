@@ -74,7 +74,7 @@ public class TestIUserService extends BasicTest
 	{
 		PageInfoUtil pageInfoUtil = new PageInfoUtil();
 		pageInfoUtil.setPageSize(5);
-		pageInfoUtil.setCurrentPage(4);
+/*		pageInfoUtil.setCurrentPage(-1);*/
 		Map<String,Object> condMap = new HashMap<String,Object>();
 		condMap.put("status", Byte.valueOf("1"));
 		List<AAdmins> list = this.userService.findListAdminsService(pageInfoUtil, condMap);

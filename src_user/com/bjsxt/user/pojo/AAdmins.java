@@ -5,6 +5,7 @@ import java.util.Date;
 public class AAdmins
 {
 	private int id;
+	private int roleId;
 	private String email;
 	private String password;
 	private String trueName;
@@ -15,6 +16,15 @@ public class AAdmins
 	private Date updateTime;
 	private Date lastLoginTime;
 
+	public int getRoleId()
+	{
+		return roleId;
+	}
+
+	public void setRoleId(int roleId)
+	{
+		this.roleId = roleId;
+	}
 	public int getId()
 	{
 		return id;

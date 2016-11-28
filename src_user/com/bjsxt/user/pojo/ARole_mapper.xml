@@ -2,47 +2,26 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.bjsxt.user.dao.IAAdminsDao">
+<mapper namespace="com.bjsxt.user.dao.IARoleDao">
 
 	<!-- 查询单个记录 -->
-	<select id="findOne" parameterType="map" resultType="admins">
-		select * from a_admins
+	<select id="findOne" parameterType="map" resultType="role">
+		select * from a_role
 		<where>
 			<if test="id != null and id != ''">
 				id = #{id}
 			</if>
-			<if test="email != null and email !='' ">
-				email = #{email}
-			</if>
-			<if test="password != null and password !='' ">
-				password = #{password}
-			</if>
 		</where>
 	</select>
 	<!-- 跟新一条数据 -->
-	<update id="update" parameterType="admins">
-		update a_admins
+	<update id="update" parameterType="role">
+		update a_role
 		<set>
-			<if test="password != null and password !=''">
-				password = #{password},
-			</if>
-			<if test="roleId != null and roleId !=''">
-				roleId = #{roleId}
-			</if>
-			<if test="email != null and email !=''">
-				email = #{email},
+			<if test="name != null and name !=''">
+				name = #{name},
 			</if>
 			<if test="status != null and status !=''">
 				status = #{status},
-			</if>
-			<if test="trueName != null and trueName !=''">
-				trueName = #{trueName},
-			</if>
-			<if test="phone != null and phone !=''">
-				phone = #{phone},
-			</if>
-			<if test="qq != null and qq !=''">
-				qq = #{qq},
 			</if>
 			<if test="updateTime != null ">
 				updateTime = #{updateTime},
@@ -58,23 +37,18 @@
 		</where>
 	</update>
 	<!-- 添加一条记录 -->
-	<insert id="insert" parameterType="admins" useGeneratedKeys="true"
+	<insert id="insert" parameterType="role" useGeneratedKeys="true"
 		keyProperty="id">
-		INSERT INTO `a_admins` (`email`, `password`, `trueName`, `phone`, `qq`,
-		`status`, `createTime`, `updateTime`, `lastLoginTime`)
+		INSERT INTO a_role(name,context,status, createTime, updateTime, lastLoginTime)
 		VALUES
-		(#{email}, #{password},#{trueName},#{phone}, #{qq},#{status},
-		#{createTime},#{updateTime},#{lastLoginTime})
+		(#{name}, #{context},#{status},#{createTime},#{updateTime},#{lastLoginTime})
 	</insert>
 	<!-- 删除一条数据 -->
 	<delete id="delete" parameterType="map">
-		delete from a_admins
+		delete from a_role
 		<where>
 			<if test="id != null and id !=''">
 				id = #{id}
-			</if>
-			<if test="roleId != null and roleId !=''">
-				roleId = #{roleId}
 			</if>
 			<if test="status !=null and status !='' ">
 				status = #{status}
@@ -83,7 +57,7 @@
 	</delete>
 	<!-- 查询多条记录(涉及到分页) 如果要分页： pageOperation = 'true' 如果按更新倒叙(默认是顺序) updateTimeDesc 
 		= "true" -->
-	<select id="findList" parameterType="map" resultType="admins">
+	<select id="findList" parameterType="map" resultType="role">
 		<choose>
 			<when test="pageOperation == 'true'">
 				select count(*) as id
@@ -92,18 +66,14 @@
 				select *
 			</otherwise>
 		</choose>
-		from a_admins ad
+		from a_role ar
 		<!-- 拼接条件 -->
 		<where>
 			<if test="status != null and status !=''">
 				status = #{status}
 			</if>
-			<if test="roleId != null and roleId !=''">
-				roleId = #{roleId}
-			</if>
 			<if test="keyword != null and keyword !=''">
-				((email like #{keyword}) or (phone like #{keyword}) or (qq like
-				#{keyword}))
+				((name like #{keyword}) or (context like #{keyword}))
 			</if>
 			<if test="startTime != null and endTime != null">
 			<![CDATA[
@@ -115,15 +85,15 @@
 		<if test="pageOperation != 'true' ">
 			<choose>
 				<when test="updateTimeDesc != null">
-					order by ad.updateTime desc
+					order by ar.updateTime desc
 				</when>
 				<otherwise>
-					order by ad.updateTime asc
+					order by ar.updateTime asc
 				</otherwise>
 			</choose>
 
 			<if
-				test="(currRecord != null and currRecord !='' and pageSize !=null and pageSize != '') or currRecord == 0">
+				test="(currRecord != null and currRecord !='' and pageSize !=null and pageSize != '') or (currRecord == 0) ">
 				limit #{currRecord},#{pageSize}
 			</if>
 		</if>
