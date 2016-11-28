@@ -40,4 +40,26 @@
 		<property name="basePackage" value="com.bjsxt"/>
 	</bean>
 	<!--======================mybatis支持开始=============================-->
+	
+	<!-- ======================事物管理器配置开始============================ -->
+	<!-- 配置事物管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	</bean>
+	
+	<!-- 配置那些方法被事物管理 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+			<tx:method name="*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 确定横切面 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.bjsxt.*.service.impl.*.*(..))" id="pointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+	</aop:config>
+	<!-- ======================事物管理器配置结束============================ -->
 </beans>

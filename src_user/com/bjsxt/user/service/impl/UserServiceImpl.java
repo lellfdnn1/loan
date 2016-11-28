@@ -34,6 +34,10 @@ public class UserServiceImpl implements IUserService
 	{
 		JSONObject resultJson = new JSONObject();
 		int insert = this.adminsDao.insert(admins);
+		
+		String str = null;
+		str.charAt(1);
+		
 		if(insert>0)
 		{
 			resultJson.put("code", "1");
