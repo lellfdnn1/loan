@@ -27,25 +27,22 @@ public class TestIUserService extends BasicTest
 	public void info()
 	{
 		userService = (IUserService) this.ac.getBean("userService");
-		md5Util = (MD5Util)this.ac.getBean("mD5Util");
+		md5Util = (MD5Util)this.ac.getBean("md5Util");
 	}
 	@Test
 	public void insertAdminsService()
 	{
 		AAdmins admins = new AAdmins();
-		for(int i = 1; i<30 ;i++)
-		{
-			admins.setPassword(md5Util.encryString("123456"+i));
-			admins.setPhone("123"+i);
-			admins.setQq("123"+i);
-			admins.setEmail("aa@aa.com"+i);
-			admins.setTrueName("asd"+i);
+			admins.setPassword(md5Util.encryString("123456"));
+			admins.setPhone("123");
+			admins.setQq("123");
+			admins.setEmail("aa@aa.com");
+			admins.setTrueName("asd");
 			admins.setCreateTime(new Date());
 			admins.setLastLoginTime(new Date());
 			admins.setUpdateTime(new Date());
 			JSONObject jsonObject = this.userService.insertAdminsService(admins);
 			System.out.println(jsonObject);
-		}
 	}
 	@Test
 	public void deleteAdminsService()

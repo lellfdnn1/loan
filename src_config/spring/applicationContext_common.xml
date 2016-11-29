@@ -62,4 +62,15 @@
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
 	</aop:config>
 	<!-- ======================事物管理器配置结束============================ -->
+	
+	<!-- 前后缀 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	
+	</bean>
+	
+	
+	<!-- 开启mvc注解 -->
+	<context:annotation-config/>
 </beans>

@@ -100,6 +100,11 @@ public class UserServiceImpl implements IUserService
 	@Override
 	public List<AAdmins> findListAdminsService(PageInfoUtil pageInfoUtil, Map<String, Object> condMap)
 	{
+		/* 修改条件 */
+		if(condMap.get("keyword")!=null)
+		{
+			condMap.put("keyword", "%"+condMap.get("keyword")+"%");
+		}
 		if(pageInfoUtil == null)
 		{
 			/* 不分页查询 */

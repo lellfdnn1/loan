@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author Administrator
  *
  */
-@Component("mD5Util")
+@Component("md5Util")
 public class MD5Util 
 {
 	/**
