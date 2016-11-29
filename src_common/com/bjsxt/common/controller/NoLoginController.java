@@ -65,6 +65,7 @@ public class NoLoginController extends BasicController
 							admins.setLastLoginTime(new Date());
 							this.userService.updateAdminsService(admins);
 							// 跳转页面
+							session.setAttribute("admins", admins);
 							return "redirect:/back/admins/main.htm";
 						} else
 						{
