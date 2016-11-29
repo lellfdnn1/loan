@@ -52,12 +52,20 @@ public class TestRoleService extends BasicTest
 	}
 	
 	@Test
-	public void findOneAdminsService()
+	public void findOneRoleService()
 	{
 		Map<String,Object> condMap = new HashMap<String,Object>();
-		condMap.put("id", 4);
+		condMap.put("id", 1);
 		ARole role = this.userService.findOneRoleService(condMap);
 		ConstantFinalUtil.LOGGER.info("---admins.id={}-admins.trueName={}--",role.getId(),role.getName());
+		
+		int count = 1;
+		for (Iterator iterator = role.getAdminsSet().iterator(); iterator.hasNext();)
+		{
+			AAdmins admins = (AAdmins) iterator.next();
+			ConstantFinalUtil.LOGGER.info("---计数：{}---admins:id={},email={}----",count++,admins.getId(),admins.getEmail());
+		}
+		
 		role.setName("ccccccccc");
 		JSONObject jsonObject = this.userService.updateRoleService(role);
 		System.out.println(jsonObject);

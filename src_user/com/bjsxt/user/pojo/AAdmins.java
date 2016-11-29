@@ -15,6 +15,8 @@ public class AAdmins
 	private Date createTime;
 	private Date updateTime;
 	private Date lastLoginTime;
+	/* 多对一，多的一端的引用 */
+	private ARole role;
 
 	public int getRoleId()
 	{
@@ -123,6 +125,16 @@ public class AAdmins
 	public void setLastLoginTime(Date lastLoginTime)
 	{
 		this.lastLoginTime = lastLoginTime;
+	}
+
+	public ARole getRole()
+	{
+		return role;
+	}
+
+	public void setRole(ARole role)
+	{
+		this.role = role;
 	}
 
 }

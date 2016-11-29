@@ -1,6 +1,7 @@
 package com.bjsxt.user.pojo;
 
 import java.util.Date;
+import java.util.Set;
 
 public class ARole
 {
@@ -11,6 +12,9 @@ public class ARole
 	private Date createTime;
 	private Date updateTime;
 	private Date lastLoginTime;
+	
+	/* 关联的一得一端 */
+	private Set<AAdmins> adminsSet;
 	
 	public int getId()
 	{
@@ -67,6 +71,14 @@ public class ARole
 	public void setLastLoginTime(Date lastLoginTime)
 	{
 		this.lastLoginTime = lastLoginTime;
+	}
+	public Set<AAdmins> getAdminsSet()
+	{
+		return adminsSet;
+	}
+	public void setAdminsSet(Set<AAdmins> adminsSet)
+	{
+		this.adminsSet = adminsSet;
 	}
 	
 }

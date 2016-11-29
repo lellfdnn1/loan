@@ -4,8 +4,21 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjsxt.user.dao.IARoleDao">
 
+	<!-- 关联的自定义查询结果 -->
+	<resultMap type="role" id="myResultMap">
+		<id property="id" column="id"/>
+		<collection property="adminsSet" ofType="admins" column="id"
+				select="findOneAdmins">
+		</collection>
+	</resultMap>
+	
+	<!-- 查询一条amdins记录 -->
+	<select id="findOneAdmins" resultType="admins">
+		select * from a_admins where roleId = #{id}
+	</select>
+	
 	<!-- 查询单个记录 -->
-	<select id="findOne" parameterType="map" resultType="role">
+	<select id="findOne" parameterType="map" resultMap="myResultMap">
 		select * from a_role
 		<where>
 			<if test="id != null and id != ''">
@@ -57,7 +70,7 @@
 	</delete>
 	<!-- 查询多条记录(涉及到分页) 如果要分页： pageOperation = 'true' 如果按更新倒叙(默认是顺序) updateTimeDesc 
 		= "true" -->
-	<select id="findList" parameterType="map" resultType="role">
+	<select id="findList" parameterType="map" resultMap="myResultMap">
 		<choose>
 			<when test="pageOperation == 'true'">
 				select count(*) as id

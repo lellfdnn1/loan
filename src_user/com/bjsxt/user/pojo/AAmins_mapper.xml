@@ -3,9 +3,22 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bjsxt.user.dao.IAAdminsDao">
-
+	
+	<!-- 自定义的结果集 -->
+	<resultMap type="admins" id="myResultMap">
+		<id column="id" property="id"/>
+		<association property="role" javaType="role" column="roleId" 
+			select="findOneRole">
+		</association>
+	</resultMap>
+	
+	<!-- 查询一个角色 -->	
+	<select id="findOneRole" resultType="role">
+		select * from a_role where id = #{roleId} 
+	</select>
+	
 	<!-- 查询单个记录 -->
-	<select id="findOne" parameterType="map" resultType="admins">
+	<select id="findOne" parameterType="map" resultMap="myResultMap">
 		select * from a_admins
 		<where>
 			<if test="id != null and id != ''">
@@ -58,7 +71,7 @@
 		</where>
 	</update>
 	<!-- 添加一条记录 -->
-	<insert id="insert" parameterType="admins" useGeneratedKeys="true"
+	<insert id="insert" parameterType="admins"  useGeneratedKeys="true"
 		keyProperty="id">
 		INSERT INTO `a_admins` (`email`, `password`, `trueName`, `phone`, `qq`,
 		`status`, `createTime`, `updateTime`, `lastLoginTime`)
@@ -83,7 +96,7 @@
 	</delete>
 	<!-- 查询多条记录(涉及到分页) 如果要分页： pageOperation = 'true' 如果按更新倒叙(默认是顺序) updateTimeDesc 
 		= "true" -->
-	<select id="findList" parameterType="map" resultType="admins">
+	<select id="findList" parameterType="map"  resultMap="myResultMap">
 		<choose>
 			<when test="pageOperation == 'true'">
 				select count(*) as id

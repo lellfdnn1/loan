@@ -63,7 +63,7 @@ public class TestIUserService extends BasicTest
 		Map<String,Object> condMap = new HashMap<String,Object>();
 		condMap.put("id", 4);
 		AAdmins admins = this.userService.findOneAdminsService(condMap);
-		ConstantFinalUtil.LOGGER.info("---admins.id={}-admins.trueName={}--",admins.getId(),admins.getTrueName());
+		ConstantFinalUtil.LOGGER.info("---admins.id={}-admins.trueName={}-角色信息={}-",admins.getId(),admins.getTrueName(),admins.getRole().getName());
 		admins.setEmail("ccc@bb.com");
 		JSONObject jsonObject = this.userService.updateAdminsService(admins);
 		System.out.println(jsonObject);
