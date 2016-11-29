@@ -33,7 +33,7 @@ public class TestIUserService extends BasicTest
 	public void insertAdminsService()
 	{
 		AAdmins admins = new AAdmins();
-			admins.setPassword(md5Util.encryString("123456"));
+			admins.setPassword(md5Util.encryString("1"));
 			admins.setPhone("123");
 			admins.setQq("123");
 			admins.setEmail("aa@aa.com");

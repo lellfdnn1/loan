@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSONObject;
+import com.bjsxt.common.util.DateFormatUtil;
 import com.bjsxt.common.util.MD5Util;
+import com.bjsxt.common.util.PageInfoUtil;
 import com.bjsxt.common.util.RegCheck;
 import com.bjsxt.common.util.VerifyCodeUtils;
 
@@ -23,6 +26,9 @@ public class BasicController
 	
 	@Resource
 	protected MD5Util md5Util;
+	
+	@Resource
+	protected DateFormatUtil dateFormatUtil;
 	/**
 	 * 获得验证码
 	 * @throws IOException 
@@ -37,5 +43,62 @@ public class BasicController
 		/* 将验证码输出到浏览器 */
 		VerifyCodeUtils.outputImage(75, 40, response.getOutputStream(), code);
 		return null;
+	}
+	/**
+	 * 封装分页信息
+	 * @param request
+	 * @return
+	 */
+	protected PageInfoUtil getPageInfo(HttpServletRequest request)
+	{
+		String pageSize = request.getParameter("pageSize");
+		String currentPage = request.getParameter("currentPage");
+		PageInfoUtil pageInfoUtil = new PageInfoUtil();
+		try
+		{
+			pageInfoUtil.setCurrentPage(Integer.valueOf(currentPage));
+			pageInfoUtil.setPageSize(Integer.valueOf(pageSize));
+		} catch (Exception e)
+		{
+		}
+		return pageInfoUtil;
+	}
+	protected JSONObject getResultJson(HttpServletRequest request,Object obj)
+	{
+		String navTabId = request.getParameter("navTabId");
+		String rel = request.getParameter("rel");
+		String callbackType = request.getParameter("callbackType");
+		String forwardUrl = request.getParameter("forwardUrl");
+		String confirmMsg = request.getParameter("confirmMsg");
+		
+		if(navTabId==null)
+		{
+			navTabId = "";
+		}
+		if(rel==null)
+		{
+			rel = "";
+		}
+		if(callbackType==null)
+		{
+			callbackType = "";
+		}
+		if(forwardUrl==null)
+		{
+			forwardUrl = "";
+		}
+		if(confirmMsg==null)
+		{
+			confirmMsg = "";
+		}
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("statusCode", "200");
+		jsonObject.put("message", obj+"");
+		jsonObject.put("navTabId", navTabId);
+		jsonObject.put("rel", rel);
+		jsonObject.put("callbackType", callbackType);
+		jsonObject.put("forwardUrl", forwardUrl);
+		jsonObject.put("confirmMsg", confirmMsg);
+		return jsonObject;
 	}
 }

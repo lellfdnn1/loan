@@ -1,5 +1,6 @@
 package com.bjsxt.user.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,17 @@ public class UserServiceImpl implements IUserService
 	public JSONObject insertAdminsService(AAdmins admins)
 	{
 		JSONObject resultJson = new JSONObject();
+		/* eamil检查是否已经存在 */
+		Map<String,Object> condMap = new HashMap<String,Object>();
+		condMap.put("email", admins.getEmail());
+		AAdmins one = this.adminsDao.findOne(condMap);
+		if(one != null)
+		{
+			resultJson.put("code", "3");
+			resultJson.put("info", "邮箱已存在");
+			return resultJson;
+		}
+		
 		int insert = this.adminsDao.insert(admins);
 		
 		if(insert>0)
@@ -85,7 +97,7 @@ public class UserServiceImpl implements IUserService
 			data.put("id", admins.getId());
 			resultJson.put("data", data);
 		}else
-		{
+		{	
 			resultJson.put("code", "0");
 			resultJson.put("info", "管理员修改失败");
 		}

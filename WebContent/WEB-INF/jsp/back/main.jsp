@@ -16,6 +16,7 @@
 	media="print" />
 <link href="${rootPath}/dwz_jui/uploadify/css/uploadify.css" rel="stylesheet"
 	type="text/css" media="screen" />
+
 <!--[if IE]>
 <link href="${rootPath}/dwz_jui/themes/css/ieHack.css" rel="stylesheet" type="text/css" media="screen"/>
 <![endif]-->
@@ -44,6 +45,7 @@
 
 <script src="${rootPath}/dwz_jui/bin/dwz.min.js" type="text/javascript"></script>
 <script src="${rootPath}/dwz_jui/js/dwz.regional.zh.js" type="text/javascript"></script>
+<script src="${rootPath}/common/include/util.js" type="text/javascript"></script>
 
 
 <script type="text/javascript">

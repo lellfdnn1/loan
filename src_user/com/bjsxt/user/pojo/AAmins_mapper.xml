@@ -40,7 +40,7 @@
 				password = #{password},
 			</if>
 			<if test="roleId != null and roleId !=''">
-				roleId = #{roleId}
+			 	roleId = #{roleId}
 			</if>
 			<if test="email != null and email !=''">
 				email = #{email},
@@ -49,7 +49,7 @@
 				status = #{status},
 			</if>
 			<if test="trueName != null and trueName !=''">
-				trueName = #{trueName},
+			    trueName = #{trueName},
 			</if>
 			<if test="phone != null and phone !=''">
 				phone = #{phone},
@@ -84,13 +84,13 @@
 		delete from a_admins
 		<where>
 			<if test="id != null and id !=''">
-				id = #{id}
+				and id = #{id}
 			</if>
 			<if test="roleId != null and roleId !=''">
-				roleId = #{roleId}
+				and  roleId = #{roleId}
 			</if>
 			<if test="status !=null and status !='' ">
-				status = #{status}
+				and status = #{status}
 			</if>
 		</where>
 	</delete>
@@ -109,18 +109,18 @@
 		<!-- 拼接条件 -->
 		<where>
 			<if test="status != null and status !=''">
-				status = #{status}
+				and status = #{status}
 			</if>
 			<if test="roleId != null and roleId !=''">
-				roleId = #{roleId}
+				and roleId = #{roleId}
 			</if>
 			<if test="keyword != null and keyword !=''">
-				((email like #{keyword}) or (phone like #{keyword}) or (qq like
+				and ((email like #{keyword}) or (phone like #{keyword}) or (qq like
 				#{keyword}))
 			</if>
 			<if test="startTime != null and endTime != null">
 			<![CDATA[
-				createTime >= #{startTime} and createTime < #{endTime}
+				and createTime >= #{startTime} and createTime < #{endTime}
 			]]>
 			</if>
 		</where>

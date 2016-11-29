@@ -15,6 +15,7 @@ public class AAdmins
 	private Date createTime;
 	private Date updateTime;
 	private Date lastLoginTime;
+	private String statusStr ;
 	/* 多对一，多的一端的引用 */
 	private ARole role;
 
@@ -135,6 +136,18 @@ public class AAdmins
 	public void setRole(ARole role)
 	{
 		this.role = role;
+	}
+
+	public String getStatusStr()
+	{
+		if(this.status == 1)
+		{
+			return "启用";
+		}else if(this.status == 0)
+		{
+			return "禁用";
+		}
+		return "未知";
 	}
 
 }
