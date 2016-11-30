@@ -120,6 +120,56 @@ public class AdminsBackController extends BasicController
 		}
 		return null;
 	}
+	
+	/**
+	 * 管理员删除操作
+	 * @param request
+	 * @param response
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("adminsDelete.htm")
+	public @ResponseBody String adminsDelete(HttpServletRequest request,HttpServletResponse response,String id)
+	{
+		Map<String,Object> condMap = new HashMap<String,Object>();
+		condMap.put("id", id);
+		JSONObject jsonObject = this.userService.deleteAdminsService(condMap);
+		try
+		{
+			response.getWriter().write(this.getResultJson(request, jsonObject.get("info")).toJSONString());
+		} catch (IOException e)
+		{
+		}
+		return null;
+	}
+	/**
+	 * 改Admins信息
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("adminsUpdate.htm")
+	public String adminsUpdate(String id)
+	{
+		/* 查询数据库或的admins信息 */
+		Map<String,Object> condMap = new HashMap<String,Object>();
+		condMap.put("id", id);
+		AAdmins admins = this.userService.findOneAdminsService(condMap);
+		this.request.setAttribute("admins", admins);
+		return "/back/adminsUpdate";
+	}	
+	/**
+	 * 提交修改信息
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping("adminsUpdateSubmit.htm")
+	public String adminsUpdateSubmit(String id)
+	{
+		/* 查询数据库或的admins信息 */
+		ConstantFinalUtil.LOGGER.info("--adminsUpdateSubmit--");
+		return null;
+	}	
+	
 	/* 管理员的操作结束 */
 	/*====================================辅助方法========================*/
 	/***

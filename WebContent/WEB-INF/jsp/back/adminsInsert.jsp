@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/include/page.jsp"%>
 <link href="${rootPath}/css/AdminsInsertCss.css" type="text/css"  />
-<h2 class="contentTitle">表单验证</h2>
+<h2 class="contentTitle">管理员添加</h2>
 <div class="pageContent">
 	<form method="post" action="${rootPath }/back/admins/adminsInsertSubmit.htm"
 		class="pageForm required-validate"

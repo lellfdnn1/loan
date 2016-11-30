@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/include/page.jsp"%>
-<form id="pagerForm" method="post" action="demo_page1.html">
-	<input type="hidden" name="status" value="${param.status}"> <input
-		type="hidden" name="keywords" value="${param.keywords}" /> <input
-		type="hidden" name="pageNum" value="1" /> <input type="hidden"
-		name="numPerPage" value="${model.numPerPage}" /> <input type="hidden"
-		name="orderField" value="${param.orderField}" />
+<form id="pagerForm" method="post" action="${rootPath }/back/admins/adminsList.htm">
+	<input type="hidden" name="keyword" value="${requestScope.map.keyword }" >
+	<input type="hidden" name="status" value="${requestScope.map.status }" >
+	<input type="hidden" name="startTime" value="${requestScope.map.startTime }" >
+	<input type="hidden" name="endTime" value="${requestScope.map.endTime }" >
+	<input type="hidden" name="currentPage" value="${requestScope.pageInfoUtil.currentPage }">
+	<input type="hidden" name="pageSize" value="${requestScope.pageInfoUtil.pageSize }">
 </form>
-
 
 <div class="pageHeader">
 	<form onsubmit="return navTabSearch(this);" action="${rootPath }/back/admins/adminsList.htm" method="post">
@@ -47,10 +47,10 @@
 		<ul class="toolBar">
 			<li><a class="add" href="${rootPath }/back/admins/adminsInsert.htm" target="navTab" rel="adminsInsert"><span>管理员添加</span></a></li>
 			<li><a class="delete"
-				href="demo/common/ajaxDone.html?uid={sid_user}" target="ajaxTodo"
+				href="${rootPath }/back/admins/adminsDelete.htm?id={sid_user}"  target="ajaxTodo"
 				title="确定要删除吗?"><span>删除</span></a></li>
-			<li><a class="edit" href="demo_page4.html?uid={sid_user}"
-				target="navTab"><span>修改</span></a></li>
+			<li><a class="edit" href="${rootPath }/back/admins/adminsUpdate.htm?id={sid_user}"
+				onclick="return confirm('确定要修改嘛？')" target="navTab"><span>修改</span></a></li>
 			<li class="line">line</li>
 			<li><a class="icon" href="demo/common/dwz-team.xls"
 				target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>

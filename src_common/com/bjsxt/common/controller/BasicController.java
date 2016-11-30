@@ -22,6 +22,8 @@ import com.bjsxt.common.util.VerifyCodeUtils;
  */
 public class BasicController
 {
+	public static HttpServletRequest request;
+	
 	protected String info ;
 	
 	@Resource

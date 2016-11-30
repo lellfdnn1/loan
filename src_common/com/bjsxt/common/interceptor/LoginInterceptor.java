@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.bjsxt.common.controller.BasicController;
 import com.bjsxt.user.pojo.AAdmins;
 /**
  * 后台Admins登录的拦截器
@@ -15,11 +16,13 @@ import com.bjsxt.user.pojo.AAdmins;
 @Component("loginInterceptor")
 public class LoginInterceptor extends HandlerInterceptorAdapter
 {
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
 	{
 		HttpSession session = request.getSession();
 		AAdmins admins = (AAdmins)session.getAttribute("admins");
+		BasicController.request = request;
 		if(admins == null)
 		{
 			session.setAttribute("info", "登录过期，请重新登录");
