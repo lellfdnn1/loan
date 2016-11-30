@@ -33,16 +33,19 @@ public class TestIUserService extends BasicTest
 	public void insertAdminsService()
 	{
 		AAdmins admins = new AAdmins();
-			admins.setPassword(md5Util.encryString("1"));
-			admins.setPhone("123");
-			admins.setQq("123");
-			admins.setEmail("bb@bb.com");
-			admins.setTrueName("asd");
+		for(int i=0; i<30 ;i++)
+		{
+			admins.setPassword(md5Util.encryString("1"+i));
+			admins.setPhone("123"+i);
+			admins.setQq("123"+i);
+			admins.setEmail("aa@aa.com"+i);
+			admins.setTrueName("asd"+i);
 			admins.setCreateTime(new Date());
 			admins.setLastLoginTime(new Date());
 			admins.setUpdateTime(new Date());
 			JSONObject jsonObject = this.userService.insertAdminsService(admins);
 			System.out.println(jsonObject);
+		}
 	}
 	@Test
 	public void deleteAdminsService()

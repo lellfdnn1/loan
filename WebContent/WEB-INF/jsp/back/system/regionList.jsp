@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/include/page.jsp"%>
-<form id="pagerForm" method="post" action="${rootPath }/back/admins/adminsList.htm">
+<form id="pagerForm" method="post" action="${rootPath }/back/system/regionList.htm">
 	<input type="hidden" name="keyword" value="${requestScope.map.keyword }" >
 	<input type="hidden" name="status" value="${requestScope.map.status }" >
 	<input type="hidden" name="startTime" value="${requestScope.map.startTime }" >
@@ -11,7 +11,7 @@
 </form>
 
 <div class="pageHeader">
-	<form onsubmit="return navTabSearch(this);" action="${rootPath }/back/admins/adminsList.htm" method="post">
+	<form onsubmit="return navTabSearch(this);" action="${rootPath }/back/system/regionList.htm" method="post">
 		<input type="hidden" name="currentPage" value="${requestScope.pageInfoUtil.currentPage }">
 		<input type="hidden" name="pageSize" value="${requestScope.pageInfoUtil.pageSize }">
 		<div class="searchBar">
@@ -45,48 +45,44 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="add" href="${rootPath }/back/admins/adminsInsert.htm" target="navTab" rel="adminsInsert"><span>管理员添加</span></a></li>
-			<li><a class="delete"
-				href="${rootPath }/back/admins/adminsDelete.htm?id={sid_user}"  target="ajaxTodo" 
-				title="确定要删除吗?"><span>删除</span></a></li>
-			<li><a class="edit" href="${rootPath }/back/admins/adminsUpdate.htm?id={sid_user}"
-				onclick="return confirm('确定要修改嘛？')" target="navTab"><span>修改</span></a></li>
+			<li><a class="add" href="${rootPath }/back/admins/adminsInsert.htm" target="navTab" rel="adminsInsert"><span>行政区域添加</span></a></li>
+			<li><a class="delete" href="${rootPath }/back/system/regionList.htm?id={sid_user}"  target="ajaxTodo"title="确定要删除吗?"><span>删除</span></a></li>
+			<li><a class="edit" href="${rootPath }/back/admins/adminsUpdate.htm?id={sid_user}" onclick="return confirm('确定要修改嘛？')" target="navTab"><span>修改</span></a></li>
 			<li class="line">line</li>
-			<li><a class="icon" href="demo/common/dwz-team.xls"
-				target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
+			<li><a class="icon" href="${rootPath }/back/system/regionList.htm?parentId=0" target="navTab" rel="regionList" ><span>查询所有的省</span></a></li>
+			<li><a class="icon" href="${rootPath }/back/system/regionList.htm?parentId={sid_user}" target="navTab" ref="regionList"><span>查询子节点</span></a></li>
+			<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="138">
 		<thead>
 			<tr>
 				<th width="80">序号</th>
-				<th width="100">email</th>
-				<th width="40">真实姓名</th>
-				<th width="80">电话</th>
-				<th width="80">qq</th>
-				<th width="80" >状态</th>
+				<th width="100">名字</th>
+				<th width="40">pinyin</th>
+				<th width="80">地区编码</th>
+				<th width="80">内容</th>
 				<th width="120">创建时间</th>
 				<th width="120">更新时间</th>
 				<th width="120">上次登录时间</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${requestScope.list}" var="admins" varStatus="vs">
-				<tr target="sid_user" rel="${admins.id }">
+			<c:forEach items="${requestScope.list}" var="regoin" varStatus="vs">
+				<tr target="sid_user" rel="${regoin.id }">
 					<td>${(requestScope.pageInfoUtil.currentPage-1)*requestScope.pageInfoUtil.pageSize+vs.count }</td>
-					<td>${admins.emailStr }</td>
-					<td>${admins.trueName }</td>
-					<td>${admins.phone }</td>
-					<td>${admins.qq }</td>
-					<td>${admins.statusStr }</td>
+					<td>${regoin.name }</td>
+					<td>${regoin.pinyin }</td>
+					<td>${regoin.areacode }</td>
+					<td>${regoin.content }</td>
 					<td>
-						<fmt:formatDate value="${admins.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>					
+						<fmt:formatDate value="${regoin.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>					
 					</td>
 					<td>
-						<fmt:formatDate value="${admins.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>					
+						<fmt:formatDate value="${regoin.updateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>					
 					</td>
 					<td>
-						<fmt:formatDate value="${admins.lastLoginTime}" pattern="yyyy-MM-dd HH:mm:ss"/>					
+						<fmt:formatDate value="${regoin.pubTime}" pattern="yyyy-MM-dd HH:mm:ss"/>					
 					</td>
 				</tr>
 			</c:forEach>
@@ -94,8 +90,9 @@
 	</table>
 	<div class="panelBar">
 		<div class="pages">
-			<form action="${rootPath }/back/admins/adminsList.htm" method="post" id="adminsFormId" onsubmit="return navTabSearch(this);">
+			<form action="${rootPath }/back/system/regionList.htm" method="post" id="adminsFormId" onsubmit="return navTabSearch(this);">
 				<input type="hidden" name="keyword" value="${requestScope.map.keyword }" >
+				<input type="text" name="parentId" value="${requestScope.parentId }" >
 				<input type="hidden" name="status" value="${requestScope.map.status }" >
 				<input type="hidden" name="startTime" value="${requestScope.map.startTime }" >
 				<input type="hidden" name="endTime" value="${requestScope.map.endTime }" >

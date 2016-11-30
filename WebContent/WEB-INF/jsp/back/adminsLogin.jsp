@@ -33,7 +33,7 @@
 		</div>
 		<div id="login_content">
 			<div class="loginForm">
-				<form action="${rootpath }/loan/adminsLoginSubmit.htm" method="post">
+				<form action="${rootPath }/adminsLoginSubmit.htm" method="post">
 					<p>
 						<label>邮箱：</label> 
 						<input type="text" name="email" size="20" class="login_input" value="${requestScope.admins.email }"/>

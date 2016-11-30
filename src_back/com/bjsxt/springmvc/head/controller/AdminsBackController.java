@@ -69,22 +69,15 @@ public class AdminsBackController extends BasicController
 	{
 		/* 封装分页信息 */
 		PageInfoUtil pageInfoUtil =  super.getPageInfo(request);
-		/* 接受Admins条件参数 */
-		Map<String,Object> condMap = this.getCondMap(request);
+		/* 接受--封装Admins条件参数 */
+		Map<String,Map<String,Object>> condMap = this.getCondMap(request);
 		/* 从数据库查询数据 */
-		List<AAdmins> adminsList = this.userService.findListAdminsService(pageInfoUtil, condMap);
+		List<AAdmins> list = this.userService.findListAdminsService(pageInfoUtil,
+				(Map<String,Object>)condMap.get("condMap"));
 		/* 将数据存入作用域 */
-		
-		if(condMap.get("startTime")!=null && condMap.get("endTime")!=null)
-		{
-			/*  将日期转回来 */
-			condMap.put("startTime", request.getParameter("startTime"));
-			condMap.put("endTime",request.getParameter("endTime"));
-		}
-		condMap.put("keyword", request.getParameter("keyword"));
-		request.setAttribute("map", condMap);
+		request.setAttribute("map", condMap.get("sourceMap"));
 		request.setAttribute("pageInfoUtil", pageInfoUtil);
-		request.setAttribute("adminsList", adminsList);
+		request.setAttribute("list", list);
 		return "/back/adminsList";
 	}
 	/**
@@ -92,9 +85,9 @@ public class AdminsBackController extends BasicController
 	 * @return
 	 */
 	@RequestMapping("adminsInsert.htm")
-	public @ResponseBody String adminsInsert()
+	public @ResponseBody String adminsInsert(HttpServletRequest request,HttpServletResponse response)
 	{
-		AAdmins admins = (AAdmins)this.request.getSession().getAttribute("admins");
+		AAdmins admins = (AAdmins)request.getSession().getAttribute("admins");
 		if(admins.getRole().getId() == 2)
 		{
 			try
@@ -151,7 +144,7 @@ public class AdminsBackController extends BasicController
 	@RequestMapping("adminsDelete.htm")
 	public @ResponseBody String adminsDelete(HttpServletRequest request,HttpServletResponse response,String id)
 	{
-		AAdmins admins = (AAdmins)this.request.getSession().getAttribute("admins");
+		AAdmins admins = (AAdmins)request.getSession().getAttribute("admins");
 		if(admins.getRole().getId() == 2)
 		{
 			try
@@ -179,13 +172,13 @@ public class AdminsBackController extends BasicController
 	 * @return
 	 */
 	@RequestMapping("adminsUpdate.htm")
-	public String adminsUpdate(String id)
+	public String adminsUpdate(HttpServletRequest request,String id)
 	{
 		/* 查询数据库或的admins信息 */
 		Map<String,Object> condMap = new HashMap<String,Object>();
 		condMap.put("id", id);
 		AAdmins admins = this.userService.findOneAdminsService(condMap);
-		this.request.setAttribute("admins", admins);
+		request.setAttribute("admins", admins);
 		return "/back/adminsUpdate";
 	}	
 	/**
@@ -203,51 +196,5 @@ public class AdminsBackController extends BasicController
 	
 	/* 管理员的操作结束 */
 	/*====================================辅助方法========================*/
-	/***
-	 * 封装查询条件
-	 * @param request
-	 * @return
-	 */
-	private Map<String, Object> getCondMap(HttpServletRequest request)
-	{
-		String keyword = request.getParameter("keyword");
-		String status = request.getParameter("status");
-		String start = request.getParameter("startTime");
-		String end = request.getParameter("endTime");
-		
-		Map<String,Object> condMap = new HashMap<String,Object>();
-		
-		if(keyword == null )
-		{
-			keyword = "";
-		}
-		if(status == null)
-		{
-			status = "";
-		}
-		if(start == null )
-		{
-			start = "";
-		}
-		if(end == null )
-		{
-			end = "";
-		}
-		
-		Date startTime = null;
-		Date endTime = null;
-		
-		if(!"".equalsIgnoreCase(start) && !"".equalsIgnoreCase(end))
-		{
-			startTime =  this.dateFormatUtil.parseStr(start);
-			endTime =  this.dateFormatUtil.parseStr(end);
-		}
-		/* 设置参数 */
-		condMap.put("keyword", keyword);
-		condMap.put("status", status);
-		condMap.put("startTime", startTime);
-		condMap.put("endTime", endTime);
-		return condMap;
-	}
 
 }

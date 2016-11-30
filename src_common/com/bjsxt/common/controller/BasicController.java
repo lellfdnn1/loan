@@ -1,6 +1,9 @@
 package com.bjsxt.common.controller;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +25,6 @@ import com.bjsxt.common.util.VerifyCodeUtils;
  */
 public class BasicController
 {
-	public static HttpServletRequest request;
-	
-	public static HttpServletResponse response ;
 	
 	protected String info ;
 	
@@ -67,6 +67,12 @@ public class BasicController
 		}
 		return pageInfoUtil;
 	}
+	/**
+	 * 拼装jui需要的json对象
+	 * @param request
+	 * @param obj
+	 * @return
+	 */
 	protected JSONObject getResultJson(HttpServletRequest request,Object obj)
 	{
 		String navTabId = request.getParameter("navTabId");
@@ -104,5 +110,67 @@ public class BasicController
 		jsonObject.put("forwardUrl", forwardUrl);
 		jsonObject.put("confirmMsg", confirmMsg);
 		return jsonObject;
+	}
+	
+	/***
+	 * 封装查询条件
+	 * 
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected Map<String, Map<String,Object>> getCondMap(HttpServletRequest request)
+	{
+		String keyword = request.getParameter("keyword");
+		String status = request.getParameter("status");
+		String start = request.getParameter("startTime");
+		String end = request.getParameter("endTime");
+		
+		if(keyword == null )
+		{
+			keyword = "";
+		}
+		if(status == null)
+		{
+			status = "";
+		}
+		if(start == null )
+		{
+			start = "";
+		}
+		if(end == null )
+		{
+			end = "";
+		}
+		
+		Date startTime = null;
+		Date endTime = null;
+		
+		if(!"".equalsIgnoreCase(start) && !"".equalsIgnoreCase(end))
+		{
+			startTime =  this.dateFormatUtil.parseStr(start);
+			endTime =  this.dateFormatUtil.parseStr(end);
+		}
+		
+		/* 返回参数容器 */
+		Map<String,Object> sourceMap = new HashMap<String,Object>();
+		sourceMap.put("keyword", keyword);
+		sourceMap.put("status", status);
+		sourceMap.put("startTime", start);
+		sourceMap.put("endTime", end);
+		/* 查询参数容器 */
+		Map<String,Object> condMap = new HashMap<String,Object>();
+		
+		/* 设置参数 */
+		condMap.put("keyword", keyword);
+		condMap.put("status", status);
+		condMap.put("startTime", startTime);
+		condMap.put("endTime", endTime);
+		
+		/* 返回参数容器 */
+		Map<String,Map<String,Object>> resultMap = new HashMap<String,Map<String,Object>>();
+		resultMap.put("sourceMap", sourceMap);
+		resultMap.put("condMap", condMap);
+		return resultMap;
 	}
 }

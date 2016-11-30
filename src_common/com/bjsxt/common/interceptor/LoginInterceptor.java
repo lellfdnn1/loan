@@ -22,8 +22,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter
 	{
 		HttpSession session = request.getSession();
 		AAdmins admins = (AAdmins)session.getAttribute("admins");
-		BasicController.request = request;
-		BasicController.response = response;
 		if(admins == null)
 		{
 			session.setAttribute("info", "登录过期，请重新登录");

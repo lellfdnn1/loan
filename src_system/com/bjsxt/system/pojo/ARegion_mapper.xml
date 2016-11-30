@@ -76,8 +76,8 @@
 			<if test="id != null and id !=''">
 				and id = #{id}
 			</if>
-			<if test="regionId != null and regionId !=''">
-				and regionId = #{regionId}
+			<if test="parentId != null and parentId !=''">
+				and parentId = #{parentId}
 			</if>
 			<if test="status !=null and status !='' ">
 				and status = #{status}
@@ -101,10 +101,10 @@
 			<if test="status != null and status !=''">
 				and status = #{status}
 			</if>
-			<if test="regionId != null and regionId !=''">
-				and regionId = #{regionId}
+			<if test="parentId != null">
+				and parentId = #{parentId}
 			</if>
-			<if test="keyword != null and keyword !=''">
+			<if test="keyword != null and keyword !='' ">
 				and ((name like #{keyword}) or (pinyin like #{keyword})
 				or (content like
 				#{keyword}))

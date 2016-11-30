@@ -24,5 +24,13 @@
 					</ul>
 				</li>
 			</ul>
+			<ul class="tree treeFolder">
+				<li>
+					<a href="${rootPath }/back/system/regionList.htm" target="navTab" rel="regionList">行政区域管理</a>
+					<ul>
+						<li><a href="${rootPath }/back/system/regionList.htm" target="navTab" rel="regionList">行政区域管理</a></li>
+					</ul>
+				</li>
+			</ul>
 		</c:if>	
 	</div>

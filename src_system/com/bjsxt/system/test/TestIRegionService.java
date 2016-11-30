@@ -16,7 +16,7 @@ import com.bjsxt.common.util.PageInfoUtil;
 import com.bjsxt.system.pojo.ARegion;
 import com.bjsxt.system.service.IRegionService;
 
-public class TestIUserService extends BasicTest
+public class TestIRegionService extends BasicTest
 {
 	private IRegionService regionService;
 
@@ -77,10 +77,11 @@ public class TestIUserService extends BasicTest
 		pageInfoUtil.setPageSize(2);
 		/* pageInfoUtil.setCurrentPage(-1); */
 		Map<String, Object> condMap = new HashMap<String, Object>();
+		condMap.put("parentId", "0");
 		//condMap.put("status", Byte.valueOf("1"));
 		/*List<ARegion> list = this.regionService.findListRegionService(pageInfoUtil, condMap);*/
 		
-		 List<ARegion> list = this.regionService.findListRegionService(pageInfoUtil,condMap);
+		 List<ARegion> list = this.regionService.findListRegionService(null,condMap);
 		 
 		int count = 1;
 		for (Iterator<ARegion> iterator = list.iterator(); iterator.hasNext();)
