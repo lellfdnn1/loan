@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.system.dao.IARegionDao">
+
+	<!-- 自定义的结果集 -->
+	<resultMap type="region" id="myResultMap">
+		<id column="id" property="id" />
+		<!-- 多 -->
+		<association property="region" javaType="region" column="parentId"
+			select="findParentRegion">
+		</association>
+		<!-- 一 -->
+		<collection property="regionSet" ofType="region" column="id"
+			select="findChildList">
+		</collection>
+	</resultMap>
+
+	<!-- 查询所有的孩子节点 -->
+	<select id="findChildList" resultType="region">
+		select * from a_region where parentId = #{id}
+	</select>
+	
+	<!-- 查询父节点 -->
+	<select id="findParentRegion" resultType="region">
+		select * from a_region
+		where id = #{parentId}
+	</select>
+	
+	<!-- 查询单个记录 -->
+	<select id="findOne" parameterType="map" resultMap="myResultMap">
+		select * from a_region
+		<where>
+			<if test="id != null and id != ''">
+				id = #{id}
+			</if>
+			<if test="name != null and name != ''">
+				name = #{name}
+			</if>
+		</where>
+	</select>
+
+	<!-- 跟新一条数据 -->
+	<update id="update" parameterType="region">
+		update a_region
+		set
+		name=#{name},
+		parentId=#{parentId},
+		pinyin=#{pinyin},
+		areacode=#{areacode},
+		content=#{content},
+		leafStatus=#{leafStatus},
+		status=#{status},
+		createTime=#{createTime},
+		updateTime=#{updateTime},
+		pubTime=#{pubTime}
+		<where>
+			<if test="id != null and id !='' ">
+				id = #{id}
+			</if>
+		</where>
+	</update>
+	<!-- 添加一条记录 -->
+	<insert id="insert" parameterType="region" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into a_region (parentId, name, pinyin, areacode,
+		content, leafStatus, status, createTime, updateTime, pubTime)
+		values
+		(#{parentId},#{name},#{pinyin},#{areacode},#{content},#{leafStatus},#{status},#{createTime},#{updateTime},#{pubTime})
+	</insert>
+	<!-- 删除一条数据 -->
+	<delete id="delete" parameterType="map">
+		delete from a_region
+		<where>
+			<if test="id != null and id !=''">
+				and id = #{id}
+			</if>
+			<if test="regionId != null and regionId !=''">
+				and regionId = #{regionId}
+			</if>
+			<if test="status !=null and status !='' ">
+				and status = #{status}
+			</if>
+		</where>
+	</delete>
+	<!-- 查询多条记录(涉及到分页) 如果要分页： pageOperation = 'true' 如果按更新倒叙(默认是顺序) updateTimeDesc 
+		= "true" -->
+	<select id="findList" parameterType="map" resultMap="myResultMap">
+		<choose>
+			<when test="pageOperation == 'true'">
+				select count(*) as id
+			</when>
+			<otherwise>
+				select *
+			</otherwise>
+		</choose>
+		from a_region ad
+		<!-- 拼接条件 -->
+		<where>
+			<if test="status != null and status !=''">
+				and status = #{status}
+			</if>
+			<if test="regionId != null and regionId !=''">
+				and regionId = #{regionId}
+			</if>
+			<if test="keyword != null and keyword !=''">
+				and ((name like #{keyword}) or (pinyin like #{keyword})
+				or (content like
+				#{keyword}))
+			</if>
+			<if test="startTime != null and endTime != null">
+			<![CDATA[
+				and createTime >= #{startTime} and createTime < #{endTime}
+			]]>
+			</if>
+		</where>
+		<!-- 如果分页 -->
+		<if test="pageOperation != 'true' ">
+			<choose>
+				<when test="pubTimeDesc != null">
+					order by ad.pubTime desc
+				</when>
+				<otherwise>
+					order by ad.pubTime asc
+				</otherwise>
+			</choose>
+
+			<if
+				test="(currRecord != null and currRecord !='' and pageSize !=null and pageSize != '') or currRecord == 0">
+				limit #{currRecord},#{pageSize}
+			</if>
+		</if>
+	</select>
+</mapper>

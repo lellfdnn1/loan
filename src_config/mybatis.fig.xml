@@ -15,5 +15,6 @@
 	<typeAliases>
 		<typeAlias type="com.bjsxt.user.pojo.AAdmins" alias="admins"/>
 		<typeAlias type="com.bjsxt.user.pojo.ARole" alias="role"/>
+		<typeAlias type="com.bjsxt.system.pojo.ARegion" alias="region"/>
 	</typeAliases>
 </configuration>
