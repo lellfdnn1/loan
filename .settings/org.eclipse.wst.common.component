@@ -7,6 +7,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_back"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_head"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_system"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src_investor"/>
         <property name="context-root" value="loan"/>
         <property name="java-output-path" value="/loan/build/classes"/>
     </wb-module>
