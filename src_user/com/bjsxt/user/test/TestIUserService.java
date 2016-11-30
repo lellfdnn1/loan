@@ -36,7 +36,7 @@ public class TestIUserService extends BasicTest
 			admins.setPassword(md5Util.encryString("1"));
 			admins.setPhone("123");
 			admins.setQq("123");
-			admins.setEmail("aa@aa.com");
+			admins.setEmail("bb@bb.com");
 			admins.setTrueName("asd");
 			admins.setCreateTime(new Date());
 			admins.setLastLoginTime(new Date());

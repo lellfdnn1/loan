@@ -92,9 +92,29 @@ public class AdminsBackController extends BasicController
 	 * @return
 	 */
 	@RequestMapping("adminsInsert.htm")
-	public  String adminsInsert()
+	public @ResponseBody String adminsInsert()
 	{
-		return "/back/adminsInsert";
+		AAdmins admins = (AAdmins)this.request.getSession().getAttribute("admins");
+		if(admins.getRole().getId() == 2)
+		{
+			try
+			{
+				response.getWriter().write(this.getResultJson(request, "对不起，你没有权限").toJSONString());
+				return null;
+			} catch (IOException e)
+			{
+			}
+		}
+		try
+		{
+			System.out.println(this.getResultJson(request, "对不起，你没有权限"));
+			/*response.getWriter().write(this.getResultJson(request, "求修改").toJSONString());*/
+			request.getRequestDispatcher("/WEB-INF/jsp/back/adminsInsert.jsp").forward(request, response);;
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 	/**
 	 * 用户提交操作
@@ -131,6 +151,17 @@ public class AdminsBackController extends BasicController
 	@RequestMapping("adminsDelete.htm")
 	public @ResponseBody String adminsDelete(HttpServletRequest request,HttpServletResponse response,String id)
 	{
+		AAdmins admins = (AAdmins)this.request.getSession().getAttribute("admins");
+		if(admins.getRole().getId() == 2)
+		{
+			try
+			{
+				response.getWriter().write(this.getResultJson(request, "对不起，你没有权限").toJSONString());
+				return null;
+			} catch (IOException e)
+			{
+			}
+		}
 		Map<String,Object> condMap = new HashMap<String,Object>();
 		condMap.put("id", id);
 		JSONObject jsonObject = this.userService.deleteAdminsService(condMap);

@@ -16,6 +16,8 @@ public class AAdmins
 	private Date updateTime;
 	private Date lastLoginTime;
 	private String statusStr ;
+	private String emailStr ;
+	
 	/* 多对一，多的一端的引用 */
 	private ARole role;
 
@@ -148,6 +150,15 @@ public class AAdmins
 			return "禁用";
 		}
 		return "未知";
+	}
+
+	public String getEmailStr()
+	{
+		StringBuffer sb = new StringBuffer();
+		sb.append(email.substring(0,email.indexOf("@")));
+		sb.append("**");
+		sb.append(email.substring(email.lastIndexOf(".")));
+		return sb.toString();
 	}
 
 }

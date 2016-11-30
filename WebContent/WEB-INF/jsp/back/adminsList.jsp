@@ -47,7 +47,7 @@
 		<ul class="toolBar">
 			<li><a class="add" href="${rootPath }/back/admins/adminsInsert.htm" target="navTab" rel="adminsInsert"><span>管理员添加</span></a></li>
 			<li><a class="delete"
-				href="${rootPath }/back/admins/adminsDelete.htm?id={sid_user}"  target="ajaxTodo"
+				href="${rootPath }/back/admins/adminsDelete.htm?id={sid_user}"  target="ajaxTodo" 
 				title="确定要删除吗?"><span>删除</span></a></li>
 			<li><a class="edit" href="${rootPath }/back/admins/adminsUpdate.htm?id={sid_user}"
 				onclick="return confirm('确定要修改嘛？')" target="navTab"><span>修改</span></a></li>
@@ -74,7 +74,7 @@
 			<c:forEach items="${requestScope.adminsList}" var="admins" varStatus="vs">
 				<tr target="sid_user" rel="${admins.id }">
 					<td>${(requestScope.pageInfoUtil.currentPage-1)*requestScope.pageInfoUtil.pageSize+vs.count }</td>
-					<td>${admins.email }</td>
+					<td>${admins.emailStr }</td>
 					<td>${admins.trueName }</td>
 					<td>${admins.phone }</td>
 					<td>${admins.qq }</td>

@@ -7,7 +7,6 @@
 	<form method="post" action="${rootPath }/back/admins/adminsInsertSubmit.htm"
 		class="pageForm required-validate"
 		onsubmit="return iframeCallback(this,navTabAjaxDone);" 
-		
 		<!-- 关闭当前的页面 -->
 		<input type="hidden" name="callbackType" value="closeCurrent">
 		<input type="hidden" name="navTabId" value="adminsList">

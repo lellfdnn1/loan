@@ -24,6 +24,8 @@ public class BasicController
 {
 	public static HttpServletRequest request;
 	
+	public static HttpServletResponse response ;
+	
 	protected String info ;
 	
 	@Resource
