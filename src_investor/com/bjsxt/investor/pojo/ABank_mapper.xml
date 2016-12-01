@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bjsxt.investor.dao.IBankDao">
+	<resultMap type="com.bjsxt.investor.pojo.ABank" id="myResultMap">
+		<id property="id" column="id"/>
+		<collection property="investorBankSet" ofType="com.bjsxt.investor.pojo.AInvestorBank" 
+			column="id" select="findInvestorBankList">
+		</collection>
+	</resultMap>
+	
+	<!-- 关联关系 查询出资方和银行的关系表 -->
+	<select id="findInvestorBankList" resultType="com.bjsxt.investor.pojo.AInvestorBank">
+		select * from a_investor_bank where bankId = #{id}
+	</select>
+	
+	<!-- 查询单个记录 -->
+	<select id="findOne" parameterType="map" resultMap="myResultMap">
+		select * from a_bank
+		<where>
+			<if test="id != null and id != ''">
+				id = #{id}
+			</if>
+		</where>
+	</select>
+
+	<!-- 跟新一条数据 -->
+	<update id="update" parameterType="com.bjsxt.investor.pojo.ABank">
+		UPDATE a_bank 
+		SET
+		(code=#{code},name=#{name},url=#{url},logo=#{logo},content=#{content},
+		status=#{status},createTime=#{createTime},updateTime=#{updateTime},pubTime=#{pubTime}) 
+		
+		<where>
+			<if test="id != null and id !='' ">
+				id = #{id}
+			</if>
+		</where>
+	</update>
+	<!-- 添加一条记录 -->
+	<insert id="insert" parameterType="com.bjsxt.investor.pojo.ABank" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO a_bank 
+		(code, name, url, logo, content, status, createTime, updateTime, pubTime) 
+		VALUES 
+		(#{code},#{name},#{url},#{logo},#{content},#{status},#{createTime},#{updateTime},#{pubTime}) 
+	</insert>
+	<!-- 删除一条数据 -->
+	<delete id="delete" parameterType="map">
+		delete from a_bank
+		<where>
+			<if test="id != null and id !=''">
+				and id = #{id}
+			</if>
+			<if test="status !=null and status !='' ">
+				and status = #{status}
+			</if>
+		</where>
+	</delete>
+	<!-- 查询多条记录(涉及到分页) 如果要分页： pageOperation = 'true' 如果按更新倒叙(默认是顺序) updateTimeDesc 
+		= "true" -->
+	<select id="findList" parameterType="map" resultMap="myResultMap">
+		<choose>
+			<when test="pageOperation == 'true'">
+				select count(*) as id
+			</when>
+			<otherwise>
+				select *
+			</otherwise>
+		</choose>
+		from a_bank ad
+		<!-- 拼接条件 -->
+		<where>
+			<if test="status != null and status !=''">
+				and status = #{status}
+			</if>
+			<if test="keyword != null and keyword !='' ">
+				and ((name like #{keyword}) or (code like #{keyword}
+				or (content like
+				#{keyword}))
+			</if>
+			<if test="startTime != null and endTime != null">
+			<![CDATA[
+				and createTime >= #{startTime} and createTime < #{endTime}
+			]]>
+			</if>
+		</where>
+		<!-- 如果分页 -->
+		<if test="pageOperation != 'true' ">
+			<choose>
+				<when test="pubTimeDesc != null">
+					order by ad.pubTime desc
+				</when>
+				<otherwise>
+					order by ad.pubTime asc
+				</otherwise>
+			</choose>
+
+			<if
+				test="(currRecord != null and currRecord !='' and pageSize !=null and pageSize != '') or currRecord == 0">
+				limit #{currRecord},#{pageSize}
+			</if>
+		</if>
+	</select>
+</mapper>
